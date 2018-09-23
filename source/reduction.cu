@@ -16,7 +16,7 @@
 #include <string>
 
 // Number of element to reduce
-static const int n_elements = 8 * 1024 * 1024;
+static const int n_elements = 32 * 1024 * 1024;
 
 // Number of threads per block to use for all kernels
 static const int threads = 256;
@@ -315,7 +315,7 @@ int main()
 
         float cpu_result = 0;
 
-        int iterations = 100;
+        int iterations = 10;
 
         // start the timer
         Timer hTimer;
@@ -377,7 +377,7 @@ int main()
             nvtxRangeId_t rangeBenchmark = nvtxRangeStart("Reduction Stage 0 Benchmark");
 
             //Start Benchmark
-            int iterations = 100;
+            int iterations = 10;
             CUDA(cudaEventRecord(start, 0));
 
             // Run multiple times for a good benchmark
@@ -451,7 +451,7 @@ int main()
             nvtxRangeId_t rangeBenchmark = nvtxRangeStart("Reduction Stage 1 Benchmark");
 
             //Start Benchmark
-            int iterations = 100;
+            int iterations = 10;
             CUDA(cudaEventRecord(start, 0));
 
             // Run multiple times for a good benchmark
@@ -525,7 +525,7 @@ int main()
             nvtxRangeId_t rangeBenchmark = nvtxRangeStart("Reduction Stage 2 Benchmark");
 
             //Start Benchmark
-            int iterations = 100;
+            int iterations = 10;
             CUDA(cudaEventRecord(start, 0));
 
             // Run multiple times for a good benchmark
@@ -600,7 +600,7 @@ int main()
             nvtxRangeId_t rangeBenchmark = nvtxRangeStart("Reduction Stage 3 Benchmark");
 
             //Start Benchmark
-            int iterations = 100;
+            int iterations = 10;
             CUDA(cudaEventRecord(start, 0));
 
             // Run multiple times for a good benchmark
@@ -676,7 +676,7 @@ int main()
             nvtxRangeId_t rangeBenchmark = nvtxRangeStart("Reduction Stage 4 Benchmark");
 
             //Start Benchmark
-            int iterations = 100;
+            int iterations = 10;
             CUDA(cudaEventRecord(start, 0));
 
 
@@ -754,7 +754,7 @@ int main()
             nvtxRangeId_t rangeBenchmark = nvtxRangeStart("Reduction Stage 5 Benchmark");
 
             //Start Benchmark
-            int iterations = 100;
+            int iterations = 10;
             CUDA(cudaEventRecord(start, 0));
 
             // Run multiple times for a good benchmark
