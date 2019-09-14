@@ -1,19 +1,29 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 PROJECT(PerformanceLab)
 
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
-SET(CMAKE_MODULES_PATH ${CMAKE_SOURCE_DIR}/CMakeModules)
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
 
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# Enable C++11 for host code
+set(CMAKE_CXX_STANDARD 11)
+
+# Set a default build type if none was specified
+IF(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    SET(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    # Set the possible values of build type for cmake-gui
+    SET_PROPERTY(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+ENDIF()
+
 ########################################
 # CUDA Setup
 ########################################
-FIND_PACKAGE(CUDA 8.0 REQUIRED)
-INCLUDE(${CMAKE_MODULES_PATH}/CUDAComputesList.cmake)
+FIND_PACKAGE(CUDA 10 REQUIRED)
+INCLUDE(${CMAKE_MODULE_PATH}/CUDAComputesList.cmake)
 
 FIND_LIBRARY(CUDA_nvToolsExt_LIBRARY
     NAMES "nvToolsExt" "nvToolsExt64_1"
@@ -34,6 +44,9 @@ IF(WIN32)
     )
 
     INCLUDE_DIRECTORIES(${CUDA_nvToolsExt_INCLUDE})
+
+    # Set up include and lib paths
+    set(CUDA_HOST_COMPILER ${CMAKE_CXX_COMPILER} CACHE FILEPATH "Host side compiler used by NVCC" FORCE)
 ENDIF(WIN32)
 
 LIST(APPEND CUDA_NVCC_FLAGS ${CUDA_GENERATE_CODE})
@@ -41,13 +54,6 @@ LIST(APPEND CUDA_NVCC_FLAGS_DEBUG "-g -G")
 SET(CUDA_VERBOSE_BUILD ON)
 
 ########################################
-
-# Set a default build type if none was specified
-IF(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    SET(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-    # Set the possible values of build type for cmake-gui
-    SET_PROPERTY(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-ENDIF()
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_INCLUDE_PATH}

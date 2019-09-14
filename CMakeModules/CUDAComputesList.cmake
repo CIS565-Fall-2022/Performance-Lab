@@ -15,11 +15,11 @@ IF(CUDA_COMPUTE_DETECT AND NOT DEFINED COMPUTES_DETECTED_LIST)
     # based on http://stackoverflow.com/questions/2285185/easiest-way-to-test-for-existence-of-cuda-capable-gpu-from-cmake/2297877#2297877 (Christopher Bruns)
 
     IF(CUDA_FOUND)
-        MESSAGE(STATUS "${PROJECT_SOURCE_DIR}/CMakeModules/cuda_compute_capability.cpp")
+        MESSAGE(STATUS "${CMAKE_MODULE_PATH}/cuda_compute_capability.cpp")
 
         TRY_RUN(RUN_RESULT_VAR COMPILE_RESULT_VAR
                 ${PROJECT_BINARY_DIR}
-                ${PROJECT_SOURCE_DIR}/CMakeModules/cuda_compute_capability.cpp
+                ${CMAKE_MODULE_PATH}/cuda_compute_capability.cpp
                 CMAKE_FLAGS
                 -DINCLUDE_DIRECTORIES:STRING=${CUDA_TOOLKIT_INCLUDE}
                 -DLINK_LIBRARIES:STRING=${CUDA_CUDART_LIBRARY}
@@ -57,6 +57,9 @@ IF(    CUDA_COMPUTE_20
     OR CUDA_COMPUTE_60
     OR CUDA_COMPUTE_61
     OR CUDA_COMPUTE_62
+    OR CUDA_COMPUTE_70
+    OR CUDA_COMPUTE_72
+    OR CUDA_COMPUTE_75
     )
     SET(FALLBACK OFF)
 ELSE()
@@ -67,8 +70,8 @@ LIST(LENGTH COMPUTES_DETECTED_LIST COMPUTES_LEN)
 IF(${COMPUTES_LEN} EQUAL 0 AND ${FALLBACK})
     MESSAGE(STATUS "You can use -DCOMPUTES_DETECTED_LIST=\"AB;XY\" (semicolon separated list of CUDA Compute versions to enable the specified computes")
     MESSAGE(STATUS "Individual compute versions flags are also available under CMake Advance options")
-    LIST(APPEND COMPUTES_DETECTED_LIST "30" "50" "60")
-    MESSAGE(STATUS "No computes detected. Fall back to 30, 50, 60")
+    LIST(APPEND COMPUTES_DETECTED_LIST "30" "50" "60" "70")
+    MESSAGE(STATUS "No computes detected. Fall back to 30, 50, 60 70")
 ENDIF()
 
 LIST(LENGTH COMPUTES_DETECTED_LIST COMPUTES_LEN)
@@ -87,7 +90,7 @@ MACRO(SET_COMPUTE VERSION)
 ENDMACRO(SET_COMPUTE)
 
 # Iterate over compute versions. Create variables and enable computes if needed
-FOREACH(VER 20 30 32 35 37 50 52 53 60 61 62)
+FOREACH(VER 20 30 32 35 37 50 52 53 60 61 62 70 72 75)
     OPTION(CUDA_COMPUTE_${VER} "CUDA Compute Capability ${VER}" OFF)
     MARK_AS_ADVANCED(CUDA_COMPUTE_${VER})
     IF(${CUDA_COMPUTE_${VER}})
