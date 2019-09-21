@@ -1,8 +1,7 @@
 # CIS 565 Performance Lab
 
 This is the second in series of 2 labs for CUDA. In this lab, we will discuss
-how NVIDIA's Nsight for Visual Studio and Visual Profiler can aid in debugging
-CUDA programs.
+how NVIDIA's Nsight tools can aid in profiling CUDA programs.
 
 **The performance lab will be held in class.**
 **Please bring your Windows CUDA-Capable laptop with the code downloaded and built.**
@@ -53,11 +52,11 @@ Please ask me or the TAs ahead of time if you have trouble compiling the code. W
 
 ## Complete Copy Kernel, Naive Transpose and Shared Memory Transpose
 
-* These are exact copies of the kernels we wrote in the Debugging Lab.
-* In the interest of time, we will not be covering the code of these during the
+* In the interest of time, we will not be writing code from scratch of these during the
   lab. So it is in your best interest to complete the code before the lab.
-    * This will also serve as a revision of the Debugging Lab as we will cover
-      more advance topics and it will make it easier for you.
+    * This will let you review how transpose with shared memory works. So when
+      we write more advance kernel that build on these, you will know what
+      changes we are making.
 * The sections you need to work on are marked by `TODO: COMPLETE THIS`.
     * There are 3 kernels you need to write, and 3 `blocks`/`grids`
       configurations you need to set up.
