@@ -64,7 +64,7 @@ INCLUDE_DIRECTORIES(
 ########################################
 # Setup the executables
 ########################################
-SET(EXECUTABLES transpose reduction)
+SET(EXECUTABLES transpose reduction reductionrecursive)
 FILE(GLOB headers source/*.h source/*.hpp)
 FOREACH(exe ${EXECUTABLES})
     CUDA_ADD_EXECUTABLE(${exe} source/${exe}.cu ${headers})
